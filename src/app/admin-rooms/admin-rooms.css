@@ -1,0 +1,60 @@
+.container{
+    font-family: Quicksand;
+}
+
+h2 {    
+    color: #364e43;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.card {
+    height: 500px;
+    width: 400px;
+    border-width: 3px;
+    border-color: #364e43; 
+    border-radius: 30px;
+    overflow: hidden  
+}
+
+h5 {
+    color: #364e43;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.card-text{
+    color: #364e43;
+    font-size: 20px;
+    font-weight: medium;
+}
+
+.btn-brown{
+    color: #ffffff;
+    font-family: 'Quicksand medium';
+    font-size: 20px;
+    background-color: #c3ae80;
+}
+
+.btn-brown:hover{
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-color: #c3ae80;
+    color: #c3ae80;
+}
+
+.btn-add{
+    display: flex;
+    justify-content: center;
+    color: #364e43;
+    font-size: 200px;
+    font-weight: medium;
+    border-color: #364e43; 
+    border-style: dashed;
+    border-radius: 30px;
+}
+
+.btn-add:hover{
+    background: #364e43;
+    color: #ffffff;
+}

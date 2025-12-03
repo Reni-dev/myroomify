@@ -1,0 +1,59 @@
+.navbar {
+    background-image: url("/login/login_background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: #c3ae80;
+    font-size: 40px;
+    font-weight: medium;
+    font-family: 'Quicksand';
+}
+
+.navbar-logo {
+    height: 100px;
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    margin-right: 2rem; 
+    margin-left: 50px;
+}
+
+.navbar-nav .nav-link {
+    color: #e4edea;
+    font-weight: 500;
+    margin: 0 1.2rem;
+    text-decoration: none;
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+    margin-right: 20px;
+}
+
+.nav-item {
+    margin-right: 50px;
+}
+
+a {
+    color: #c3ae80;
+}
+
+a:hover { 
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.navbar .nav .nav-link.active {
+    background-color: #c3ae80 !important;
+    color: #364e43 !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.5rem !important;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+

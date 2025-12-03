@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <img class="navbar-logo" src="/login/login_logo.png" alt="logo">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link"  routerLink="dashboard"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="rooms"
+                    routerLinkActive="active">Rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="bookings"
+                    routerLinkActive="active">Bookings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="reviews"
+                    routerLinkActive="active">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="account"
+                    routerLinkActive="active">Account</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main>
+    <router-outlet></router-outlet> 
+</main>
