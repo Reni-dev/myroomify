@@ -3,20 +3,20 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 200px;
+    height: 100px;
     align-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
     text-align: center;
     color: #c3ae80;
-    font-size: 40px;
+    font-size: 25px;
     font-weight: medium;
     font-family: 'Quicksand';
 }
 
 .navbar-logo {
-    height: 100px;
+    height: 50px;
     width: auto;
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
     margin-right: 2rem; 

@@ -1,48 +1,57 @@
+/*Page*/
 .container{
     font-family: Quicksand;
 }
 
 h2{    
     color: #364e43;
-    font-size: 70px;
+    font-size: 45px;
     font-weight: bold;
 }
 
+/*Card*/
 .card{
-    height: 500px;
-    width: 400px;
+    height: 100%;
+    width: 90%;
     border-width: 3px;
     border-color: #364e43; 
-    border-radius: 30px;
+    border-radius: 20px;
     overflow: hidden  
+}
+
+.card-img-top{
+    max-height: 250px;
+    object-fit: cover;
 }
 
 h5{
     color: #364e43;
-    font-size: 40px;
+    font-size: 25px;
     font-weight: bold;
 }
 
 .card-text{
     color: #364e43;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: medium;
 }
 
-.btn-brown{
+/*Edit button*/
+.btn-edit{
     color: #ffffff;
     font-family: 'Quicksand medium';
-    font-size: 20px;
+    font-size: 15px;
     background-color: #c3ae80;
 }
 
-.btn-brown:hover{
+.btn-edit:hover{
     background-color: rgb(255, 255, 255);
     border-width: 1px;
     border-color: #c3ae80;
     color: #c3ae80;
 }
 
+/*Add button*/
 .btn-add{
     display: flex;
     justify-content: center;
@@ -59,9 +68,23 @@ h5{
     color: #ffffff;
 }
 
-.btn-green{
+.btn-add-green{
     background: #364e43;
     color: #ffffff;
+}
+
+/*Delete button*/
+.btn-delete{
+    background: #bb5127;
+    color: #ffffff;
+    margin-left: 5px;
+}
+
+.btn-delete:hover{
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-color: #bb5127;
+    color: #bb5127;
 }
 
 .modal-title{

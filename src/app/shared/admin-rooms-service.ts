@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AdminRoomsService {
-  url = "http://myroomify.webtelek.hu/api/"
+  url = "http://localhost:8000/api/"
 
   constructor(
     private http: HttpClient
@@ -14,5 +14,25 @@ export class AdminRoomsService {
   getRooms$(){
     const link = this.url + "rooms"
     return this.http.get(link)
+  }
+
+  getRoom$(id: number){
+    const link = this.url + "rooms/" + id
+    return this.http.get(link)
+  }
+
+  addRoom$(data: any){
+    const link = this.url + "rooms"
+    return this.http.post(link, data)
+  }
+
+  editRoom$(id: number, data: any){
+    const link = this.url + "rooms/" + id
+    return this.http.put(link, data)
+  }
+
+  deleteRoom$(id: number){
+    const link = this.url + "rooms/" + id
+    return this.http.delete(link)
   }
 }

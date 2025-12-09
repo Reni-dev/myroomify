@@ -28,7 +28,7 @@
 
 .login {
     font-family: 'Quicksand';
-    font-size: 220%;
+    font-size: 150%;
     color: #c3ae80;
 }
 
@@ -57,7 +57,7 @@
 img {
     height: auto;
     margin-bottom: 2rem;
-    width: 600px;
+    width: 450px;
 }
 
 .remember{
@@ -74,7 +74,7 @@ img {
 .password-toggle-btn {
     font-size: 80%;
     align-items: center;
-    height: 100%;
+    height: 70%;
     background-color: #c3ae80;
     border: none;
     color: #4A4A4A;
@@ -95,7 +95,7 @@ img {
 
 .password-input-row .password-toggle-btn {
     flex-shrink: 0;
-    height: 61.5px;
+    height: 46px;
     width: 100px;
     
     
@@ -110,4 +110,5 @@ img {
 .required {
     color: rgb(210, 0, 0);
     font-size: 70%;
+    font-weight: bold;
 }

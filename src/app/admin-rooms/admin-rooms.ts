@@ -2,12 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AdminRoomsService } from '../shared/admin-rooms-service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 interface CardData {
   id: number,
   image: string,
-  title: string,
-  about: string
+  name: string,
+  capacity: number,
+  description: string,
+  price: number,
+  equipment: string,
+  status: string,
 }
 
 @Component({
@@ -20,61 +26,126 @@ interface CardData {
 
 export class AdminRooms {
 
-  cardForm!: any;
-  rooms: any;
-
+  cardForm!: any
+  rooms: any
+  showModal = false
   cards: CardData[] = []
-
-  nextId: number = 2
-  newImage: string = ''
 
   constructor(
     private build: FormBuilder,
-    private roomApi: AdminRoomsService
+    private roomApi: AdminRoomsService,
+    private router: Router
   ) {}
 
   ngOnInit(){
-    this.getRoom()
+    this.get()
     this.cardForm = this.build.group({
-      image: [''],
-      title: [''],
-      about: ['']
+        name: [''],
+        description: ['']
     })
   }
 
-  addCard(): void {
-    const newCard: CardData = {
-      id: this.nextId++,
-      image: this.newImage,
-      title: this.cardForm.value.title,
-      about: this.cardForm.value.about
+  // Card
+  addCard(){
+    const cardData = {
+      image: "/local/rooms/birka.webp",
+      name: this.cardForm.value.name,      
+      capacity: 10,
+      description: this.cardForm.value.description,
+      price: 500.3,
+      equipment: 'Wifi, TV', 
+      status: 'available'
     }
+
+    const { image, ...backendPayload } = cardData;
     
-    this.cards.push(newCard)
+    this.add(backendPayload)
     this.cardForm.reset()
-    this.newImage = ''
   }
 
-  getRoom(){
+  // Get (R-read)
+  get(){
     this.roomApi.getRooms$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.rooms = result
+        this.cards = result
+        this.rooms = result        
       },
-      error: () => {}
+      error: (err: any) => {
+        console.log(err)
+      } 
     })
   }
 
-  selectedImage(event: any) {
-    const file = event.target.files[0]
-    if (!file) return
+  // Add (C-create)
+  add(data: any) {
+    this.roomApi.addRoom$(data).subscribe({
+      next: (result: any) => {
+        console.log(result)
+        this.get()
+        this.showModal = false
+      },
+      error: (err: any) => {
+        console.log(err)
+      }
+    })
+  }
 
-    const reader = new FileReader()
+  // Delete (D)
+  delete(id: number) {
+    this.roomApi.deleteRoom$(id).subscribe({
+      next: (result: any) => {
+        console.log(result)
+        this.cards = this.cards.filter((card: CardData) => card.id !== id)
+        this.get()
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your room has been deleted",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      },
+      error: (err: any) => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Oops, something went wrong",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      }
+    })
+  }
 
-    reader.onload = () => {
-      this.newImage = reader.result as string
-    };
+  confirmDelete(id: number){
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#bb5127",
+      cancelButtonColor: "rgba(0, 0, 0, 1)",
+      confirmButtonText: "Delete"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.delete(id)
+      }
+    });
+  }
 
-    reader.readAsDataURL(file)
+  // Edit (U)
+  edit(id: number) {
+    this.router.navigate(['/navbar/room', id])
+  }
+
+  // Modal
+  setShowModal() {
+    this.showModal = true
+  }
+
+  cancel(){
+    this.showModal = false
+    this.cardForm.reset()
   }
 }

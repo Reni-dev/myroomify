@@ -1,50 +1,51 @@
-<div class="container">
+<div class="container mb-5">
     <h2 class="mt-5 mb-5">Rooms</h2>
     <div class="row g-4">
-        <div class="col-lg-4 col-md-6 col-12" *ngFor="let card of cards">
+        <div class="col-lg-3 col-md-6 col-12" *ngFor="let card of cards">
             <div class="card">
-                <img [src]="card.image" class="card-img-top" alt="Illustration">
+                <!-- <img [src]="card.image" class="card-img-top" alt="Illustration"> -->
+                <img src="/rooms/birka.webp" class="card-img-top" alt="Illustration">
                 <div class="card-body">
-                    <h5 class="card-title">{{ card.title }}</h5>
-                    <p class="card-text">{{ card.about }}</p>
-                    <a class="btn btn-brown mt-3">Go somewhere</a>
+                    <h5 class="card-title">{{ card.name }}</h5>
+                    <p class="card-text">{{ card.description }}</p>
+                    <a class="btn btn-edit mt-1 mb-3 mr-3" (click)="edit(card.id)">Edit</a>
+                    <a class="btn btn-delete mt-1 mb-3" (click)="confirmDelete(card.id)">Delete</a>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6 col-12">
-            <button type="button" class="btn btn-add card" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
+        <div class="col-lg-3 col-md-6 col-12">
+            <button type="button" class="btn btn-add card" (click)="setShowModal()">+</button>
         </div>        
     </div>
+
+    @if(showModal){
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title" id="exampleModalLabel">Szoba hozzáadása</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">Szoba hozzáadása</h1>
+                    <button type="button" class="btn-close" (click)="cancel()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="cardForm" (ngSubmit)="addCard()" id="cardForm">
+                        <div>
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="cardForm" formControlName="name" class="form-control">
+                        </div>
+                        <div>
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" id="cardForm" formControlName="description" class="form-control">
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modal-btn" (click)="cancel()">Mégse</button>
+                        <button type="submit" class="btn btn-add-green modal-btn" form="cardForm">Hozzáad</button>
+                    </div>           
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <form [formGroup]="cardForm" (ngSubmit)="addCard()" id="cardForm">
-                <div>
-                    <label for="image" class="form-label">Image</label>
-                    <input input type="file" class="form-control" (change)="selectedImage($event)">
-                </div>
-                <div>
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" id="cardForm" formControlName="title" class="form-control">
-                </div>
-                <div>
-                    <label for="about" class="form-label">About</label>
-                    <input type="text" id="cardForm" formControlName="about" class="form-control">
-                </div>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">Mégse</button>
-                <button type="button" class="btn btn-green modal-btn" data-bs-dismiss="modal" (click)="addCard()">Hozzáad</button>
-            </div>           
-        </div>
-    </div>    
+    </div>
+    <div class="modal-backdrop fade show"></div>
+    }
 </div>
-
-
-<!-- (click)="addCard()"  -->
