@@ -11,9 +11,9 @@ h2{
 
 /*Card*/
 .card{
-    height: 100%;
-    width: 90%;
-    border-width: 3px;
+    height: 90%;
+    width: 80%;
+    border-width: 2px;
     border-color: #364e43; 
     border-radius: 20px;
     overflow: hidden  

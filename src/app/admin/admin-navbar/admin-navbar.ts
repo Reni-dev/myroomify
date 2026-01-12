@@ -9,6 +9,4 @@ import { Router } from '@angular/router';
   styleUrl: './admin-navbar.css',
 })
 export class AdminNavbar {
-  ngOnInit(){
-  }
 }

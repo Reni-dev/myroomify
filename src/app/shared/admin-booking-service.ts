@@ -4,34 +4,30 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminRoomsService {
-  url = "http://localhost:8000/api/rooms/"
+export class AdminBookingService {
+  url = "http://localhost:8000/api/bookings/"
 
   constructor(
     private http: HttpClient
   ){}
 
-  getRooms$(){
+  getBookings$(){
     return this.http.get(this.url)
   }
 
-  getRoom$(id: number){
+  getBooking$(id: number){
     return this.http.get(this.url + id)
   }
 
-  addRoom$(data: any){
+  addBooking$(data: any){
     return this.http.post(this.url, data)
   }
 
-  addImage$(id: number, data: any){
-    return this.http.post(this.url + id + "/images", data)
+  editBooking$(data: any){
+    return this.http.put(this.url,  data)
   }
 
-  editRoom$(id: number, data: any){
-    return this.http.put(this.url + id, data)
-  }
-
-  deleteRoom$(id: number){
+  deleteBooking$(id: number){
     return this.http.delete(this.url + id)
   }
 }

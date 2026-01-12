@@ -1,0 +1,149 @@
+<div class="container mb-5">
+    <h2 class="mt-5 mb-5">Bookings</h2>
+    <div class="row g-3 mb-4 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label text-muted small">Search</label>
+            <input type="search" class="form-control" placeholder="Name, email or id..." (input)="onSearch($event)">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label text-muted small">Rendezés</label>
+            <select class="form-select" (change)="onSort($event)">
+                <option value="id">Id (Default)</option>
+                <option value="guest_name">Order by name (A-Z)</option>
+                <option value="check_in">Check-in date</option>
+                <option value="status">Order by status</option>
+            </select>
+        </div>
+
+        <div class="col-md-5 text-end">
+            <button type="button" class="btn btn-add" (click)="setShowModal()">
+                <i class="bi bi-plus-lg"></i> Add booking
+            </button>
+        </div>
+    </div>
+    
+    <table class="table table-striped bookingTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <!-- <th>User</th> -->
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Booking type</th>
+                <th>Status</th>
+                <th>Payment status</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(booking of filteredBookings; track booking.id) {
+                <tr>
+                    <td data-column="Id: ">{{ booking.id }}</td>
+                    <!-- <td data-column="User: ">{{ booking.user.name }}</td> -->
+                    <td data-column="Room: ">{{ booking.room.name }}</td>
+                    <td data-column="Check-in: ">{{ booking.check_in | date:'shortDate' }}</td>
+                    <td data-column="Check-out: ">{{ booking.check_out | date:'shortDate' }}</td>
+                    <td data-column="Booking type: ">{{ booking.booking_type }}</td>
+                    <td data-column="Status: ">{{ booking.status }}</td>
+                    <td data-column="Payment status: ">{{ booking.payment_status }}</td>
+                    <td data-column="Name: ">{{ booking.guest_name }}</td>
+                    <td data-column="Email: ">{{ booking.guest_email }}</td>
+                    <td data-column="Phone: ">{{ booking.guest_phone }}</td>
+                    <td>
+                        <button class="btn btn-edit btn-sm" (click)="getForEdit(booking)" (click)="setShowModal()">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-delete btn-sm" (click)="confirmDelete(booking.id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if(showModal){
+    
+    <div class="modal fade show" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: block">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                @if(addMode) {
+                    Add
+                } @else {
+                    Edit
+                }
+            </h1>
+            <button type="button" class="btn-close" (click)="cancel()"></button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm" [formGroup]="bookingForm" (ngSubmit)="save()">
+                    <div>
+                        <label for="id" class="form-label">Id</label>
+                        <input type="text" class="form-control" id="id" formControlName="id" readonly>
+                    </div>
+                    <!-- <div>
+                        <label for="user" class="form-label">User</label>
+                        <select class="form-select" id="user" formControlName="user">
+                            @for(user of users; track user.id){
+                                <option [ngValue]="user.id">{{ user.name }}</option>
+                            }
+                        </select>
+                    </div> -->
+                    <div>
+                        <label for="room" class="form-label">Room</label>
+                        <select class="form-select" id="room" formControlName="room">
+                            @for(room of rooms; track room.id){
+                                <option [ngValue]="room.id">{{ room.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label for="check_in" class="form-label">Check-in</label>
+                        <input type="date" class="form-control" id="check_in" formControlName="check_in">
+                    </div>
+                    <div>
+                        <label for="check_out" class="form-label">Check-out</label>
+                        <input type="date" class="form-control" id="check_out" formControlName="check_out">
+                    </div>
+                    <div>
+                        <label for="booking_type" class="form-label">Booking type</label>
+                        <input type="text" class="form-control" id="booking_type" formControlName="booking_type">
+                    </div>
+                    <div>
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" class="form-control" id="status" formControlName="status">
+                    </div>
+                    <div>
+                        <label for="payment_status" class="form-label">Payment status</label>
+                        <input type="text" class="form-control" id="payment_status" formControlName="payment_status">
+                    </div>
+                    <div>
+                        <label for="guest_name" class="form-label">Guest name</label>
+                        <input type="text" class="form-control" id="guest_name" formControlName="guest_name">
+                    </div>
+                    <div>
+                        <label for="guest_email" class="form-label">Guest email</label>
+                        <input type="text" class="form-control" id="guest_email" formControlName="guest_email">
+                    </div>
+                    <div>
+                        <label for="guest_phone" class="form-label">Guest phone</label>
+                        <input type="text" class="form-control" id="guest_phone" formControlName="guest_phone">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light"  (click)="cancel()">Back</button>
+                <button type="submit" class="btn btn-add" form="bookingForm">Save</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+    }
+</div>

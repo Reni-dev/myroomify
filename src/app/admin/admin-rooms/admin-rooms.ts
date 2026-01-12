@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AdminRoomsService } from '../shared/admin-rooms-service';
+import { AdminRoomsService } from '../../shared/admin-rooms-service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -48,7 +48,7 @@ export class AdminRooms {
   // Card
   addCard(){
     const cardData = {
-      image: "/local/rooms/birka.webp",
+      image: this.cardForm.value.image,
       name: this.cardForm.value.name,      
       capacity: 10,
       description: this.cardForm.value.description,
@@ -84,6 +84,7 @@ export class AdminRooms {
         console.log(result)
         this.get()
         this.showModal = false
+        this.cardForm.reset()
       },
       error: (err: any) => {
         console.log(err)

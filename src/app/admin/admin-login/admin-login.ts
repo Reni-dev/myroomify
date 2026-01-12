@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
-import { AdminAuthService } from '../shared/admin-auth-service';
+import { AdminAuthService } from '../../shared/admin-auth-service';
 
 @Component({
   selector: 'app-admin-login',
