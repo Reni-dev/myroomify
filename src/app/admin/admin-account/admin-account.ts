@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './admin-account.css',
 })
 export class AdminAccount {
-
+  logout() { 
+    window.location.href = '/login'
+  }
 }

@@ -18,4 +18,12 @@ export class AdminUserService {
   getUser$(id: number){
     return this.http.get(this.url + id)
   }
+
+  addUser$(data: any){
+    return this.http.post(this.url, data)
+  }
+
+  deleteUser$(id: number){
+    return this.http.delete(this.url + id)
+  }
 }

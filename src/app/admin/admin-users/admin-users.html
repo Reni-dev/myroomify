@@ -1,0 +1,47 @@
+<div class="container mb-5">
+    <h2 class="mt-5 mb-5">Users</h2>
+    <div class="row g-3 mb-4 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label text-muted small">Search</label>
+            <input type="search" class="form-control" placeholder="Name, email or id..." (input)="onSearch($event)">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label text-muted small">Rendezés</label>
+            <select class="form-select" (change)="onSort($event)">
+                <option value="id">Id (Default)</option>
+                <option value="guest_name">Order by name (A-Z)</option>
+            </select>
+        </div>
+    </div>
+    
+    <table class="table table-striped bookingTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(user of filteredUsers; track user.id) {
+                <tr>
+                    <td data-column="Id: ">{{ user.id }}</td>
+                    <td data-column="User: ">{{ user.user.name }}</td>
+                    <td data-column="Name: ">{{ user.guest_name }}</td>
+                    <td data-column="Email: ">{{ user.guest_email }}</td>
+                    <td>
+                        <button class="btn btn-edit btn-sm" (click)="about(user)" (click)="setShowModal()">About</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-delete btn-sm" (click)="confirmDelete(user.id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -11,8 +11,8 @@ h2{
 
 /*Card*/
 .card{
-    height: 90%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     border-width: 2px;
     border-color: #364e43; 
     border-radius: 20px;
@@ -60,7 +60,7 @@ h5{
     font-weight: medium;
     border-color: #364e43; 
     border-style: dashed;
-    border-radius: 30px;
+    border-radius: 20px;
 }
 
 .btn-add:hover{

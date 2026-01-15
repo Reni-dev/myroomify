@@ -60,6 +60,9 @@ export class AdminCalendar {
             .filter(booking => booking.room.id === room.id)
             .map(booking => ({
               title: booking.guest_name,
+              extendedProps: {
+                email: booking.guest_email
+              },
               start: booking.check_in,
               end: booking.check_out,
               color: '#134e4a'
@@ -70,15 +73,17 @@ export class AdminCalendar {
   }
 
   handleEventClick(info: any) {
+    const extraData = info.event.extendedProps
     this.booking = {
       title: info.event.title,
+      email: extraData['email'],
       start: info.event.startStr.substring(0, 10),
       end: info.event.endStr.substring(0, 10)
     };
 
-    const modal = document.getElementById('bookingModal');
-    if (modal) {
-      const bsModal = new (window as any).bootstrap.Modal(modal);
+    const modal = document.getElementById('bookingModal')
+    if(modal) {
+      const bsModal = new (window as any).bootstrap.Modal(modal)
       bsModal.show();
     }
   }
@@ -86,9 +91,9 @@ export class AdminCalendar {
   onFilter(event: any) {
     const roomId = event.target.value
 
-    if (roomId === 'all') {
+    if(roomId === 'all') {
       this.filteredCalendars = this.roomCalendar
-    } else {
+    }else {
       this.filteredCalendars = this.roomCalendar.filter(
         room => room.roomId == roomId
       )

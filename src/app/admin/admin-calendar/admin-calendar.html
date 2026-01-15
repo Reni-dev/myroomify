@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        @for(room of filteredCalendars; track room.roomName) {
+        @for(room of filteredCalendars; track room.roomId) {
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm p-3">
                     <h3 class="text-center mb-3" style="color: #134e4a;">
@@ -41,6 +41,7 @@
             </div>
             <div class="modal-body" *ngIf="booking">
                 <p><strong>Guest name:</strong> {{ booking.title }}</p>
+                <p><strong>Guest email:</strong> {{ booking.email }}</p>
                 <p><strong>Arrival:</strong> {{ booking.start | date:'yyyy. MM. dd.' }}</p>
                 <p><strong>Departure:</strong> {{ booking.end | date:'yyyy. MM. dd.' }}</p>
                 <hr>
