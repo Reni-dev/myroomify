@@ -32,9 +32,9 @@ export class AdminUsers {
     this.getRooms()
     this.userForm = this.builder.group({
       id: [''],
-      user: [''],
-      guest_name: [''],
-      guest_email: [''],
+      name: [''],
+      email: [''],
+      role: [''],
     })
   }
 
@@ -45,9 +45,9 @@ export class AdminUsers {
     this.userApi.getUsers$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.users = result
+        this.users = result.data
         console.log(this.users)
-        this.filteredUsers = result
+        this.filteredUsers = result.data
       },
       error: (err: any) => {
         console.log(err)
@@ -59,7 +59,7 @@ export class AdminUsers {
     this.roomApi.getRooms$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.rooms = result
+        this.rooms = result.data
       },
       error: (err: any) => {
         console.log(err)
@@ -71,7 +71,7 @@ export class AdminUsers {
     this.bookApi.getBookings$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.bookings = result
+        this.bookings = result.data
       },
       error: (err: any) => {
         console.log(err)
@@ -163,8 +163,8 @@ export class AdminUsers {
       let dataSecond = secondUser[key]
 
       if(key === 'user') {
-        dataFirst = firstUser.user?.username
-        dataSecond = secondUser.user?.username
+        dataFirst = firstUser.user?.name
+        dataSecond = secondUser.user?.name
       }
 
       if(dataFirst < dataSecond) return -1

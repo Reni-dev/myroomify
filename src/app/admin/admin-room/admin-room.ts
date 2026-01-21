@@ -15,113 +15,85 @@ export class AdminRoom implements OnInit{
 
   roomId!: number
   roomForm: any
+
   showModal = false
-  imageForm: any
   selectedFile: File | null = null
   mainImageUrl: string = ''
-  roomImages: any[] = [] 
-  originalImageUrl: string = ''
 
   constructor(
     private builder: FormBuilder,
     private roomApi: AdminRoomsService,
     private activated: ActivatedRoute,
     private router: Router  
-  ) { }
+  ){}
 
   ngOnInit(): void {
-    this.roomForm = this.builder.group({
-      image: [''],
-      name: [''],      
-      capacity: [''],
-      description: [''],
-      price: [''],
-      equipment: [''], 
-      status: ['']
-    })
-    this.imageForm = this.builder.group({
-        image: [''],
-    })
+    this.initForm()
     this.activated.paramMap.subscribe(params => {
-        const id = params.get('id')
-        
-        if (id) {
-            this.roomId = +id
-            this.get(this.roomId)
-        }
-    });
+      const id = params.get('id')
+      if(id){
+        this.roomId = +id
+        this.get(this.roomId)
+      }
+    })
   }
 
+  // Page
+  private initForm() {
+    this.roomForm = this.builder.group({
+      name: [''],
+      capacity: [null],
+      description: [''],
+      price: [null],
+      is_available: [1]
+    })
+  }
+
+  // Get (R-read)
   get(id:number){
     this.roomApi.getRoom$(id).subscribe({
-        next: (data: any) => {
-            this.roomForm.patchValue(data)
-            const mainImageObject = this.roomImages.length > 0 ? this.roomImages[0] : null
-            this.originalImageUrl = mainImageObject ? mainImageObject.url : ''
-
-            if (this.originalImageUrl) {                
-             this.mainImageUrl = this.addCacheBuster(this.originalImageUrl)
-            }
-        },
-        error: (err) => {
-            console.error(err)
-        }
-    });
-  }
-
-addCacheBuster(url: string): string {
-    return `${url}?t=${new Date().getTime()}`;
-}
-
-  addImage(): void {
-    if (!this.selectedFile) {
-        Swal.fire(
-          'Figyelem', 
-          'Kérjük, válasszon ki egy képet!',
-          'warning'
-        );
-        return;
-    }
-    this.showModal = false;
-    
-    Swal.fire({
-        icon: 'success',
-        title: 'Kép kiválasztva',
-        text: 'A kép a "Save changes" gomb megnyomásakor kerül feltöltésre.',
-        showConfirmButton: false,
-        timer: 1500
-    });
-  }
-
-  selectedImages(event: any){
-      const fileList: FileList = event.target.files;
-
-      if (fileList && fileList.length > 0) {
-          this.selectedFile = fileList[0]
-          const reader = new FileReader()
-          reader.onload = (e: any) => {
-            this.mainImageUrl = e.target.result;
-        }
-        reader.readAsDataURL(this.selectedFile!)
-      } else {
-          this.selectedFile = null
-          this.mainImageUrl = ''
-      }
-  }
-
-  edit(roomForm: any){
-    this.roomApi.editRoom$(this.roomId, this.roomForm.value).subscribe({
       next: (result: any) => {
-        console.log(result)
-        this.editSuccess()
+        this.roomForm.patchValue({
+          name: result.data.name,
+          capacity: result.data.capacity,
+          description: result.data.description,
+          price: result.data.price,
+          is_available: result.data.is_available
+        })
       },
-      error: (err: any) => {
-        console.log(err)
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+
+  // Edit (U-update)
+  edit() {
+    if (this.roomForm.invalid) {
+      Swal.fire('Hiba', 'Kérlek tölts ki minden kötelező mezőt!', 'warning')
+      return
+    }
+
+    const payload = {
+      name: this.roomForm.value.name,
+      capacity: Number(this.roomForm.value.capacity),
+      description: this.roomForm.value.description,
+      price: Number(this.roomForm.value.price),
+      is_available: Number(this.roomForm.value.is_available),
+      image: null
+    }
+
+    console.log(payload)
+
+    this.roomApi.editRoom$(this.roomId, payload).subscribe({
+      next: () => this.editSuccess(),
+      error: err => {
         this.editFailed()
       }
     })
   }
 
+  // Alerts
   editSuccess(){
     Swal.fire({
       position: "center",
@@ -129,7 +101,7 @@ addCacheBuster(url: string): string {
       title: "Your room has been updated",
       showConfirmButton: false,
       timer: 2500
-    });
+    })
   }
 
   editFailed(){
@@ -142,6 +114,7 @@ addCacheBuster(url: string): string {
     });
   }
 
+  // Navigation
   confirmNavigate(){
     Swal.fire({
       title: "Are you sure?",
@@ -153,20 +126,8 @@ addCacheBuster(url: string): string {
       confirmButtonText: "Go back to rooms"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.backToRooms()
+        this.router.navigate(['navbar/rooms'])
       }
     });
   }
-  backToRooms(){
-    this.router.navigate(['navbar/rooms'])
-  }
-
-  setShowModal(){
-    this.showModal = true
-  }
-
-  cancel(){
-    this.showModal = false
-  }
-
 }

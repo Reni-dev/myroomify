@@ -19,9 +19,9 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>User</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -30,9 +30,9 @@
             @for(user of filteredUsers; track user.id) {
                 <tr>
                     <td data-column="Id: ">{{ user.id }}</td>
-                    <td data-column="User: ">{{ user.user.name }}</td>
-                    <td data-column="Name: ">{{ user.guest_name }}</td>
-                    <td data-column="Email: ">{{ user.guest_email }}</td>
+                    <td data-column="User: ">{{ user.name }}</td>
+                    <td data-column="Name: ">{{ user.email }}</td>
+                    <td data-column="Email: ">{{ user.role }}</td>
                     <td>
                         <button class="btn btn-edit btn-sm" (click)="about(user)" (click)="setShowModal()">About</button>
                     </td>

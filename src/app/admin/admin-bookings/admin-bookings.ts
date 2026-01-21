@@ -68,7 +68,7 @@ export class AdminBookings {
     this.roomApi.getRooms$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.rooms = result
+        this.rooms = result.data
       },
       error: (err: any) => {
         console.log(err)
@@ -80,8 +80,8 @@ export class AdminBookings {
     this.bookApi.getBookings$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.bookings = result
-        this.filteredBookings = result
+        this.bookings = result.data
+        this.filteredBookings = result.data
       },
       error: (err: any) => {
         console.log(err)

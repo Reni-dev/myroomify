@@ -1,0 +1,57 @@
+<div>
+    <!-- Hero Section -->
+    <section class="hero text-center d-flex align-items-center justify-content-center">
+    <div class="hero-content text-white">
+        <h1>Welcome to Our Hotel</h1>
+        <p class="lead">Comfortable rooms, amazing service, unforgettable stay</p>
+        <a href="#rooms" class="btn btn-primary btn-lg">Explore Rooms</a>
+    </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+        <img src="/assets/hotel-about.jpg" class="img-fluid rounded" alt="About Us">
+        </div>
+        <div class="col-md-6">
+        <h2>About Us</h2>
+        <p>Our hotel offers cozy rooms, premium amenities, and a location right in the heart of the city. Enjoy your stay with us and experience hospitality like never before!</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section id="rooms" class="container mt-5">
+    <h2 class="mb-4 text-center">Our Rooms</h2>
+    <div class="row g-4">
+        <div class="col-md-4" *ngFor="let room of rooms">
+        <div class="card h-100 shadow-sm">
+            <img [src]="room.image || '/rooms/room.png'" class="card-img-top" alt="Room Image">
+            <div class="card-body">
+            <h5 class="card-title">{{ room.name }}</h5>
+            <p class="card-text">{{ room.description }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ room.price }}</p>
+            <p class="card-text">
+                <strong>Status:</strong>
+                <span [class.text-success]="room.is_available" [class.text-danger]="!room.is_available">
+                {{ room.is_available ? 'Available' : 'Not available' }}
+                </span>
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact bg-light mt-5 p-5">
+    <div class="container text-center">
+        <h2>Contact Us</h2>
+        <p>123 Main Street, City, Country</p>
+        <p>Email: info@ourhotel.com | Phone: +36 20 123 4567</p>
+        <a href="mailto:info@ourhotel.com" class="btn btn-primary mt-3">Send Us an Email</a>
+    </div>
+    </section>
+
+</div>

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AdminUserService {
-  url = "http://localhost:8000/api/users/"
+  url = "http://localhost:8000/api/admin/users/"
 
   constructor(
     private http: HttpClient

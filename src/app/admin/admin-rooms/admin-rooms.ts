@@ -41,6 +41,9 @@ export class AdminRooms {
     this.get()
     this.cardForm = this.build.group({
         name: [''],
+        capacity: [null],
+        is_available: [1],
+        price: [null],
         description: ['']
     })
   }
@@ -50,16 +53,14 @@ export class AdminRooms {
     const cardData = {
       image: this.cardForm.value.image,
       name: this.cardForm.value.name,      
-      capacity: 10,
+      capacity: Number(this.cardForm.value.capacity),
       description: this.cardForm.value.description,
-      price: 500.3,
-      equipment: 'Wifi, TV', 
-      status: 'available'
+      price: Number(this.cardForm.value.price),
+      is_available: Number(this.cardForm.value.is_available)
     }
 
     const { image, ...backendPayload } = cardData;
     
-    this.add(backendPayload)
     this.cardForm.reset()
   }
 
@@ -68,8 +69,8 @@ export class AdminRooms {
     this.roomApi.getRooms$().subscribe({
       next: (result: any) => {
         console.log(result)
-        this.cards = result
-        this.rooms = result        
+        this.cards = result.data
+        this.rooms = result.data     
       },
       error: (err: any) => {
         console.log(err)
@@ -78,19 +79,19 @@ export class AdminRooms {
   }
 
   // Add (C-create)
-  add(data: any) {
-    this.roomApi.addRoom$(data).subscribe({
-      next: (result: any) => {
-        console.log(result)
-        this.get()
-        this.showModal = false
-        this.cardForm.reset()
-      },
-      error: (err: any) => {
-        console.log(err)
-      }
-    })
-  }
+  // add(data: any) {
+  //   this.roomApi.addRoom$(data).subscribe({
+  //     next: (result: any) => {
+  //       console.log(result)
+  //       this.get()
+  //       this.showModal = false
+  //       this.cardForm.reset()
+  //     },
+  //     error: (err: any) => {
+  //       console.log(err)
+  //     }
+  //   })
+  // }
 
   // Delete (D)
   delete(id: number) {

@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common'
   templateUrl: './admin-calendar.html',
   styleUrl: './admin-calendar.css',
 })
+
 export class AdminCalendar {
   roomCalendar: any[] = []
   filteredCalendars: any[] = []
@@ -38,8 +39,8 @@ export class AdminCalendar {
       bookings: this.bookApi.getBookings$()
     }).subscribe({
       next: (result: any) => {
-        this.rooms = result.rooms
-        this.getCalendars(result.rooms, result.bookings)
+        this.rooms = result.rooms.data
+        this.getCalendars(result.rooms.data, result.bookings.data)
         this.filteredCalendars = this.roomCalendar
       },
       error: (err) => console.error("Hiba az adatok betöltésekor", err)

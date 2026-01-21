@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AdminRoomsService {
-  url = "http://localhost:8000/api/rooms/"
+  url = "http://localhost:8000/api/admin/rooms/"
 
   constructor(
     private http: HttpClient
